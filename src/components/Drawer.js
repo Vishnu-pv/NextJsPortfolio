@@ -33,16 +33,21 @@ export function DrawerDialogDemo() {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <Button variant="outline">About Me!</Button>
+                    <Button variant="secondary" className="text-black">About Me!</Button>
                 </DialogTrigger>
-                <DialogContent className="lg:max-w-3/4">
+                <DialogContent className="w-9/12 h-1/2">
                     <DialogHeader>
-                        <DialogTitle>About Me!</DialogTitle>
-                        <DialogDescription>
-                            Hello there! What do you wanna know about me?
+                        <DialogTitle className="text-red-600 font-bold text-[20px]">About Me!</DialogTitle>
+                        <DialogDescription className="text-black font-medium text-[18px]">
+                            Hey there! Welcome to my PortFolio. I&apos;m a FullStack Developer.
+                            I&apos;m enthusiastic about leveraging my skills and experience to tackle new challenges and contribute effectively to any project or team.
+                            Let&apos;s connect and discuss how I can add value to your team or project!
+                            <p className="mt-2">
+                                Apart from my professional endeavors, I love playing Games, watching Movies, Series, Anime and love listening to good Music.
+                                You could say I have good taste in Music! I&apos;m also good at badminton.
+                            </p>
                         </DialogDescription>
                     </DialogHeader>
-                    <ProfileForm />
                 </DialogContent>
             </Dialog>
         );
@@ -51,19 +56,24 @@ export function DrawerDialogDemo() {
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
-                <Button variant="outline">About Me!</Button>
+                <Button variant="secondary">About Me!</Button>
             </DrawerTrigger>
-            <DrawerContent>
+            <DrawerContent className="h-1/2">
                 <DrawerHeader className="text-left">
-                    <DrawerTitle>Edit profile</DrawerTitle>
+                    <DrawerTitle className="text-red-600">About Me!</DrawerTitle>
                     <DrawerDescription>
-                        Make changes to your profile here. Click save when you&apos;re done.
+                        Hey there! Welcome to my PortFolio. I&apos;m a FullStack Developer.
+                        I&apos;m enthusiastic about leveraging my skills and experience to tackle new challenges and contribute effectively to any project or team.
+                        Let&apos;s connect and discuss how I can add value to your team or project!
+                        <p className="mt-2">
+                            Apart from my professional endeavors, I love playing Games, watching Movies, Series, Anime and love listening to good Music.
+                            You could say I have good taste in Music! I&apos;m also good at badminton.
+                        </p>
                     </DrawerDescription>
                 </DrawerHeader>
-                <ProfileForm className="px-4" />
                 <DrawerFooter className="pt-2">
                     <DrawerClose asChild>
-                        <Button variant="outline">Cancel</Button>
+                        <Button variant="outline">Close</Button>
                     </DrawerClose>
                 </DrawerFooter>
             </DrawerContent>

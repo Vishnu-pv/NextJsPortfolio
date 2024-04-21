@@ -1,19 +1,19 @@
-import {Inter, Merienda, Pacifico} from "next/font/google";
+import {Inter, Merienda, Pacifico, Rajdhani} from "next/font/google";
 import "./globals.css";
 
-const pacifico = Merienda
-({weight:"300", subsets:["latin"],
+const rajdhani = Rajdhani
+({weight:["300","400","500","600","700"], subsets:["latin"],
     variable: "--font-sans"});
 
 export const metadata = {
-  title: "PortFolio",
+  title: "Vishnu | Full Stack Dev",
   description: "Designed By Vishnu",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={pacifico.className}>{children}</body>
+      <body className={rajdhani.className}>{children}</body>
     </html>
   );
 }
