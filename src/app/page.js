@@ -46,6 +46,10 @@ export default function Home() {
         reveal: { opacity: 1, transition: { duration: 2, ease: "easeIn"}},
     };
 
+    const topBar = {
+        hidden: { y: -22, opacity: 1 }, // Initial position above by 10
+        reveal: { y: 0, opacity: 1, transition: { duration: 1.3, ease: "easeIn" } }, // Moves down by 10px
+    };
 
     const iconScale = {
         whileHover: {
@@ -66,7 +70,7 @@ export default function Home() {
     }
 
     return (
-        <main className="bg-gradient-to-r from-sky-200 to-purple-300 flex flex-col h-dvh relative overflow-hidden">
+        <main className="bg-[#f2f3f4] flex flex-col h-dvh relative overflow-hidden">
             <div className="wrapper z-0">
                 <div><span className="dot"></span></div>
                 <div><span className="dot"></span></div>
@@ -84,6 +88,24 @@ export default function Home() {
                 <div><span className="dot"></span></div>
                 <div><span className="dot"></span></div>
             </div>
+            <motion.div className="absolute m-0 h-1.5 w-full z-49 bg-black flex justify-center items-center"  variants={topBar} initial="hidden" animate="reveal">
+                <motion.div className="flex h-10 w-1/4">
+                    <div className="h-full w-1/2 bg-black z-0 transform skew-x-45"></div>
+                    <div className="h-full w-1/2 bg-black z-0 transform -skew-x-45"></div>
+                </motion.div>
+            </motion.div>
+            {/*<motion.div className="absolute top-0 left-0 z-50 h-dvh w-1.5 bg-yellow-300 flex justify-center items-center">*/}
+            {/*    <motion.div className="top-0 left-0 flex flex-col h-1/2 w-full bg-red-900">*/}
+            {/*        <div className=" w-1/2 bg-black z-50 transform rotate-180 skew-x-45"></div>*/}
+            {/*        <div className="h-full w-1/2 bg-black z-50 transform -skew-x-45"></div>*/}
+            {/*    </motion.div>*/}
+            {/*</motion.div>*/}
+            {/*<motion.div className="absolute top-0 right-0 z-51 h-dvh w-1.5 bg-red-900 flex justify-center items-center">*/}
+            {/*    <motion.div className="flex h-1/4 w-10 bg-black">*/}
+            {/*        <div className="h-full w-1/2 bg-black transform rotate-90 skew-x-45"></div>*/}
+            {/*        <div className="h-1/2 w-full bg-black z-50 transform -rotate-90 -skew-x-45"></div>*/}
+            {/*    </motion.div>*/}
+            {/*</motion.div>*/}
             <section className="h-screen relative overflow-hidden text-teal-700 flex flex-col justify-center items-center">
                 <motion.div className="absolute inset-y-60 left-3/4 z-1 w-0.5 h-full bg-gray-900" variants={verticalLineVariants} initial="hidden" animate="reveal" />
                 <motion.div className="absolute inset-y-60 right-3/4 z-1 w-0.5 h-full bg-gray-900" variants={verticalLineVariants} initial="hidden" animate="reveal" />

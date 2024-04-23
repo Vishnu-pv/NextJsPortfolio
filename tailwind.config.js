@@ -18,6 +18,9 @@ module.exports = {
       },
     },
     extend: {
+      skew:{
+        '45': '45deg',
+      },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
