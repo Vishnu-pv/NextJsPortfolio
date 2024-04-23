@@ -33,7 +33,7 @@ export function DrawerDialogDemo() {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <Button variant="secondary" className="text-black">About Me!</Button>
+                    <Button variant="outline" className="text-white bg-gray-500">About Me!</Button>
                 </DialogTrigger>
                 <DialogContent className="w-9/12 h-1/2">
                     <DialogHeader>
