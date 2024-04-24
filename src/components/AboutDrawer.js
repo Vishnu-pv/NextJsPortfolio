@@ -25,15 +25,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function DrawerDialogDemo() {
+export function AboutDrawer() {
     const [open, setOpen] = useState(false);
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
     if (isDesktop) {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger asChild>
-                    <Button variant="outline" className="text-white bg-gray-500">About Me!</Button>
+                <DialogTrigger>
+                    <Button className="cursor-pointer hover:bg-white hover:text-black border-2 px-6 py-1 text-white font-bold border-black rounded bg-gray-900 tracking-widest">ABOUT</Button>
                 </DialogTrigger>
                 <DialogContent className="w-9/12 h-1/2">
                     <DialogHeader>
@@ -56,7 +56,9 @@ export function DrawerDialogDemo() {
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
-                <Button variant="secondary">About Me!</Button>
+                <Button className="cursor-pointer hover:bg-white hover:text-black border-2 px-6 py-1 text-white font-bold border-black rounded bg-gray-900 tracking-widest">
+                 ABOUT
+                </Button>
             </DrawerTrigger>
             <DrawerContent className="h-1/2">
                 <DrawerHeader className="text-left">

@@ -23,6 +23,8 @@ module.exports = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
+        bioRhyme: ["BioRhyme", 'serif'],
+        audioWide: ["Audiowide", 'sans-serif']
       },
       colors: {
         border: "hsl(var(--border))",

@@ -2,11 +2,11 @@
 import React, {useEffect, useRef} from "react";
 import { motion } from "framer-motion";
 import splitString from "../util/RegExUtil";
-import { Button } from "@/components/ui/button"
-import {DrawerDialogDemo} from "@/components/Drawer";
 import {GitHubLogoIcon, HeartFilledIcon, InstagramLogoIcon, LinkedInLogoIcon} from '@radix-ui/react-icons'
-import {Love_Light} from "next/dist/compiled/@next/font/dist/google";
-
+import {AboutDrawer} from "@/components/AboutDrawer";
+import {SkillsDrawer} from "@/components/SkillsDrawer";
+import {ProjectsDrawer} from "@/components/ProjectsDrawer";
+import {MiscDrawer} from "@/components/MiscDrawer";
 
 export default function Home() {
 
@@ -47,9 +47,28 @@ export default function Home() {
     };
 
     const topBar = {
-        hidden: { y: -22, opacity: 1 }, // Initial position above by 10
-        reveal: { y: 0, opacity: 1, transition: { duration: 1.3, ease: "easeIn" } }, // Moves down by 10px
+        hidden: { y: -22, opacity: 0.5 }, // Initial position above by 10
+        reveal: { y: 0, opacity: 1, transition: { duration: 1.5, ease: "easeIn" } }, // Moves down by 10px
     };
+
+    const leftBar = {
+        hidden: { x: -22, opacity: 0.5 }, // Initial position above by 10
+        reveal: { x: 0, opacity: 1, transition: { duration: 1.5, ease: "easeIn" } }, // Moves down by 10px
+    };
+
+    const rightBar = {
+        hidden: { x: 22, opacity: 0.5 }, // Initial position above by 10
+        reveal: { x: 0, opacity: 1, transition: { duration: 1.5, ease: "easeIn" } }, // Moves down by 10px
+    };
+
+    const button = {
+        whileHover: {
+            scale: 1.1
+        },
+        hidden: { opacity: 0 }, // Initial position above by 10
+        reveal: {  opacity: 1, transition: { duration: 1, ease: "easeIn" } }, // Moves down by 10px
+    };
+
 
     const iconScale = {
         whileHover: {
@@ -88,30 +107,44 @@ export default function Home() {
                 <div><span className="dot"></span></div>
                 <div><span className="dot"></span></div>
             </div>
-            <motion.div className="absolute m-0 h-1.5 w-full z-49 bg-black flex justify-center items-center"  variants={topBar} initial="hidden" animate="reveal">
+            <motion.div className="absolute m-0 h-1.5 w-full z-49 bg-[#1e1e1e] flex justify-center items-center"  variants={topBar} initial="hidden" animate="reveal">
                 <motion.div className="flex h-10 w-1/4">
-                    <div className="h-full w-1/2 bg-black z-0 transform skew-x-45"></div>
-                    <div className="h-full w-1/2 bg-black z-0 transform -skew-x-45"></div>
+                    <div className="h-full w-1/2 bg-[#1e1e1e] z-0 transform skew-x-45"></div>
+                    <div className="h-full w-1/2 bg-[#1e1e1e] z-0 transform -skew-x-45"></div>
                 </motion.div>
             </motion.div>
-            {/*<motion.div className="absolute top-0 left-0 z-50 h-dvh w-1.5 bg-yellow-300 flex justify-center items-center">*/}
-            {/*    <motion.div className="top-0 left-0 flex flex-col h-1/2 w-full bg-red-900">*/}
-            {/*        <div className=" w-1/2 bg-black z-50 transform rotate-180 skew-x-45"></div>*/}
-            {/*        <div className="h-full w-1/2 bg-black z-50 transform -skew-x-45"></div>*/}
-            {/*    </motion.div>*/}
-            {/*</motion.div>*/}
-            {/*<motion.div className="absolute top-0 right-0 z-51 h-dvh w-1.5 bg-red-900 flex justify-center items-center">*/}
-            {/*    <motion.div className="flex h-1/4 w-10 bg-black">*/}
-            {/*        <div className="h-full w-1/2 bg-black transform rotate-90 skew-x-45"></div>*/}
-            {/*        <div className="h-1/2 w-full bg-black z-50 transform -rotate-90 -skew-x-45"></div>*/}
-            {/*    </motion.div>*/}
-            {/*</motion.div>*/}
-            <section className="h-screen relative overflow-hidden text-teal-700 flex flex-col justify-center items-center">
+            <motion.div className="absolute top-0 left-0 z-50 h-dvh w-1.5 bg-[#1e1e1e] flex justify-center items-center"  variants={leftBar} initial="hidden" animate="reveal">
+                <motion.div className="top-0 left-0 flex flex-col h-1/2 w-14">
+                    <div className="h-1/2 w-10 bg-[#1e1e1e] z-50 transform -rotate-180 skew-y-45"></div>
+                    <div className="h-1/2 w-10 bg-[#1e1e1e] z-50 transform -rotate-180 -skew-y-45"></div>
+                </motion.div>
+            </motion.div>
+            <motion.div className="absolute top-0 right-0 z-50 h-dvh w-1.5 bg-[#1e1e1e] flex justify-center items-center"  variants={rightBar} initial="hidden" animate="reveal">
+                <motion.div className="top-0 left-0 flex flex-col  h-1/2 w-14">
+                    <div className="h-1/2 w-10 bg-[#1e1e1e] z-50 transform -skew-y-45"></div>
+                    <div className="h-1/2 w-10 bg-[#1e1e1e] z-50 transform skew-y-45"></div>
+                </motion.div>
+            </motion.div>
+            <section className="h-screen mt-5 relative overflow-hidden text-teal-700 flex flex-col justify-center items-center">
+                <motion.div className="absolute top-6 w-dvw flex justify-evenly">
+                    <motion.div className="cursor-pointer" initial="hidden" animate="reveal" whileHover="whileHover" variants={button}>
+                        <AboutDrawer/>
+                    </motion.div>
+                    <motion.div className="cursor-pointer" initial="hidden" animate="reveal" whileHover="whileHover" variants={button}>
+                        <SkillsDrawer/>
+                    </motion.div>
+                    <motion.div className="cursor-pointer" initial="hidden" animate="reveal" whileHover="whileHover" variants={button}>
+                        <ProjectsDrawer/>
+                    </motion.div>
+                    <motion.div className="cursor-pointer" initial="hidden" animate="reveal" whileHover="whileHover" variants={button}>
+                        <MiscDrawer/>
+                    </motion.div>
+                </motion.div>
                 <motion.div className="absolute inset-y-60 left-3/4 z-1 w-0.5 h-full bg-gray-900" variants={verticalLineVariants} initial="hidden" animate="reveal" />
                 <motion.div className="absolute inset-y-60 right-3/4 z-1 w-0.5 h-full bg-gray-900" variants={verticalLineVariants} initial="hidden" animate="reveal" />
                 <motion.div className="w-full h-0.5 bg-gray-900" variants={lineVariants} initial="hidden" animate="reveal" />
                 <motion.span className="mt-8 z-999" initial="hidden" animate="reveal" transition={{staggerChildren:0.1}}>
-                    <h1 className="font-bold text-2xl lg:text-8xl md:text-5xl sm:text-2xl">
+                    <h1 className="font-bold font-audioWide text-2xl lg:text-8xl md:text-5xl sm:text-2xl">
                         {nameChars.map((char) => (
                             <motion.span key={char} variants={charVariants}>
                                 {char}
@@ -123,7 +156,7 @@ export default function Home() {
                 <motion.div className="w-full mt-8 h-0.5 bg-gray-900" variants={lineVariants} initial="hidden" animate="reveal" />
                 <section className="text-gray-700 flex flex-col justify-center items-center">
                     <motion.div variants={charVariants} initial="hidden" animate="reveal">
-                        <h1 className="text-xl inline-block mt-4 font-medium bg-gray-900 text-transparent bg-clip-text">
+                        <h1 className="text-xl font-bioRhyme inline-block mt-4 font-medium bg-gray-900 text-transparent bg-clip-text">
                             Connect With Me
                         </h1>
                     </motion.div>
@@ -139,11 +172,11 @@ export default function Home() {
                         </motion.div>
                     </div>
                 </section>
-                <section className="mt-6">
-                    <div>
-                        <DrawerDialogDemo/>
-                    </div>
-                </section>
+                {/*<section className="mt-6">*/}
+                {/*    <div>*/}
+                {/*        <DrawerDialogDemo/>*/}
+                {/*    </div>*/}
+                {/*</section>*/}
                 <section className="top-2/3">
                 </section>
 
