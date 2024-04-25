@@ -32,7 +32,7 @@ export function AboutDrawer() {
     if (isDesktop) {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger>
+                <DialogTrigger asChild>
                     <Button className="cursor-pointer hover:bg-white hover:text-black border-2 px-6 py-1 text-white font-bold border-black rounded bg-gray-900 tracking-widest">ABOUT</Button>
                 </DialogTrigger>
                 <DialogContent className="w-9/12 h-1/2">
@@ -83,18 +83,4 @@ export function AboutDrawer() {
     );
 }
 
-function ProfileForm({ className }) {
-    return (
-        <form className={cn("grid items-start gap-4", className)}>
-            <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input type="email" id="email" defaultValue="shadcn@example.com" />
-            </div>
-            <div className="grid gap-2">
-                <Label htmlFor="username">Username</Label>
-                <Input id="username" defaultValue="@shadcn" />
-            </div>
-            <Button type="submit">Save changes</Button>
-        </form>
-    );
-}
+

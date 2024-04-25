@@ -32,7 +32,7 @@ export function SkillsDrawer() {
     if (isDesktop) {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger>
+                <DialogTrigger asChild>
                     <Button className="cursor-pointer hover:bg-white hover:text-black border-2 px-6 py-1 text-white font-bold border-black rounded bg-gray-900 tracking-widest">SKILLS</Button>
                 </DialogTrigger>
                 <DialogContent className="w-9/12 h-1/2">

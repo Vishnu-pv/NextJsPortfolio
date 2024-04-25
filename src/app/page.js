@@ -1,5 +1,5 @@
 "use client"
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { motion } from "framer-motion";
 import splitString from "../util/RegExUtil";
 import {GitHubLogoIcon, HeartFilledIcon, InstagramLogoIcon, LinkedInLogoIcon} from '@radix-ui/react-icons'
@@ -7,8 +7,34 @@ import {AboutDrawer} from "@/components/AboutDrawer";
 import {SkillsDrawer} from "@/components/SkillsDrawer";
 import {ProjectsDrawer} from "@/components/ProjectsDrawer";
 import {MiscDrawer} from "@/components/MiscDrawer";
+import {Button} from "@/components/ui/button";
+import {Textarea} from "@/components/ui/textarea";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/components/ui/dialog";
+import {cn} from "@/lib/utils";
+import {Label} from "@/components/ui/label";
+import {Input} from "@/components/ui/input";
+import {useMediaQuery} from "@custom-react-hooks/all";
+import {
+    Drawer, DrawerClose,
+    DrawerContent,
+    DrawerDescription, DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger
+} from "@/components/ui/drawer";
+import resend, {Resend} from "resend";
+import EmailTemplate from "@/components/EmailTemplate";
 
 export default function Home() {
+    const [open, setOpen] = useState(false);
+    const isDesktop = useMediaQuery("(min-width: 768px)");
 
     const menuButtonRef = useRef(null);
 
@@ -69,7 +95,6 @@ export default function Home() {
         reveal: {  opacity: 1, transition: { duration: 1, ease: "easeIn" } }, // Moves down by 10px
     };
 
-
     const iconScale = {
         whileHover: {
         scale: 1.3
@@ -126,20 +151,20 @@ export default function Home() {
                 </motion.div>
             </motion.div>
             <section className="h-screen mt-5 relative overflow-hidden text-teal-700 flex flex-col justify-center items-center">
-                <motion.div className="absolute top-6 w-dvw flex justify-evenly">
-                    <motion.div className="cursor-pointer" initial="hidden" animate="reveal" whileHover="whileHover" variants={button}>
+                <motion.span className="absolute top-6 w-dvw flex justify-evenly">
+                    <motion.span className="cursor-pointer" initial="hidden" animate="reveal" whileHover="whileHover" variants={button}>
                         <AboutDrawer/>
-                    </motion.div>
-                    <motion.div className="cursor-pointer" initial="hidden" animate="reveal" whileHover="whileHover" variants={button}>
+                    </motion.span>
+                    <motion.span className="cursor-pointer" initial="hidden" animate="reveal" whileHover="whileHover" variants={button}>
                         <SkillsDrawer/>
-                    </motion.div>
-                    <motion.div className="cursor-pointer" initial="hidden" animate="reveal" whileHover="whileHover" variants={button}>
+                    </motion.span>
+                    <motion.span className="cursor-pointer" initial="hidden" animate="reveal" whileHover="whileHover" variants={button}>
                         <ProjectsDrawer/>
-                    </motion.div>
-                    <motion.div className="cursor-pointer" initial="hidden" animate="reveal" whileHover="whileHover" variants={button}>
+                    </motion.span>
+                    <motion.span className="cursor-pointer" initial="hidden" animate="reveal" whileHover="whileHover" variants={button}>
                         <MiscDrawer/>
-                    </motion.div>
-                </motion.div>
+                    </motion.span>
+                </motion.span>
                 <motion.div className="absolute inset-y-60 left-3/4 z-1 w-0.5 h-full bg-gray-900" variants={verticalLineVariants} initial="hidden" animate="reveal" />
                 <motion.div className="absolute inset-y-60 right-3/4 z-1 w-0.5 h-full bg-gray-900" variants={verticalLineVariants} initial="hidden" animate="reveal" />
                 <motion.div className="w-full h-0.5 bg-gray-900" variants={lineVariants} initial="hidden" animate="reveal" />
@@ -156,7 +181,7 @@ export default function Home() {
                 <motion.div className="w-full mt-8 h-0.5 bg-gray-900" variants={lineVariants} initial="hidden" animate="reveal" />
                 <section className="text-gray-700 flex flex-col justify-center items-center">
                     <motion.div variants={charVariants} initial="hidden" animate="reveal">
-                        <h1 className="text-xl font-bioRhyme inline-block mt-4 font-medium bg-gray-900 text-transparent bg-clip-text">
+                        <h1 className="text-xl font-audioWide tracking-widest inline-block mt-4 font-medium bg-gray-900 text-transparent bg-clip-text">
                             Connect With Me
                         </h1>
                     </motion.div>
@@ -177,7 +202,43 @@ export default function Home() {
                 {/*        <DrawerDialogDemo/>*/}
                 {/*    </div>*/}
                 {/*</section>*/}
-                <section className="top-2/3">
+                <section className="mt-5 top-2/3">
+                    {/*<Button className="cursor-pointer hover:bg-white hover:text-black border-2 px-6 py-1 text-white font-bold border-black rounded bg-gray-900 tracking-widest">Drop A Message</Button>*/}
+                    {isDesktop ?
+                        <Dialog>
+                            <DialogTrigger className="cursor-pointer hover:bg-white hover:text-black border-2 px-6 py-1 text-white font-bold border-black rounded bg-gray-900 -tracking-tight">Drop A Message</DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>Send Message</DialogTitle>
+                                    <DialogDescription>
+                                        <ProfileForm/>
+                                    </DialogDescription>
+                                </DialogHeader>
+                            </DialogContent>
+                        </Dialog>
+                        :
+                        <Drawer open={open} onOpenChange={setOpen}>
+                            <DrawerTrigger asChild>
+                                <DialogTrigger className="cursor-pointer hover:bg-white hover:text-black border-2 px-6 py-1 text-white font-bold border-black rounded bg-gray-900 -tracking-tight">
+                                    Drop A Message
+                                </DialogTrigger>
+                            </DrawerTrigger>
+                            <DrawerContent className="h-1/2">
+                                <DrawerHeader className="text-left">
+                                    <DrawerTitle>Send Message</DrawerTitle>
+                                    <DrawerDescription>
+                                        <ProfileForm/>
+                                    </DrawerDescription>
+                                </DrawerHeader>
+                                {/*<DrawerFooter className="pt-2">*/}
+                                {/*    <DrawerClose asChild>*/}
+                                {/*        <Button variant="outline">Close</Button>*/}
+                                {/*    </DrawerClose>*/}
+                                {/*</DrawerFooter>*/}
+                            </DrawerContent>
+                        </Drawer>
+                    }
+
                 </section>
 
             </section>
@@ -188,5 +249,55 @@ export default function Home() {
                 </span>
             </footer>
         </main>
+    );
+}
+
+function ProfileForm({ className }) {
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        console.log('Email',email)
+        console.log('Message',message)
+        await fetch("/api/send", {
+            method: "POST",
+            body: JSON.stringify({email, message})
+        }) .then((res) => res.json())
+            .then((data) => {
+                setLoading(false);
+                // if (data && data.id) {
+                //     alert(`Thank you for your interest ${name}! We will get back to you soon!`);
+                //     setName("");
+                //     setEmail("");
+                // } else {
+                //     alert("Apologies! Please try again.");
+                // }
+            })
+            .catch((err) => {
+                //setLoading(false);
+                alert("Ooops! unfortunately some error has occurred.");
+            });
+    };
+    return (
+        <form className={cn("grid items-start gap-4 mt-4", className)} onSubmit={handleSubmit}>
+            <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+            </div>
+            <div className="grid gap-2">
+                <Label htmlFor="username">Message</Label>
+                <Textarea
+                    id="message"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                />
+            </div>
+            <Button type="submit">Send</Button>
+        </form>
     );
 }
