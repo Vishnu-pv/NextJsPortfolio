@@ -27,3 +27,9 @@ L
 src/components/MiscDrawer.js,a\9\a9f7f1475444e07418c5d3b895872b1a9029e115
 P
  src/components/ProjectsDrawer.js,d\b\db9ab68d2b2f6666709c5c14f598db59d5bbe848
+4
+.env,3\c\3c84dcdc6bbe3d7817c49dcdc327b926fea1808a
+O
+src/components/EmailTemplate.js,b\e\be35814ea69e565d90206902ef482011f4416589
+C
+src/app/api/send.js,a\9\a9de5151a8631442e06db5eb23e8335479cb62ff

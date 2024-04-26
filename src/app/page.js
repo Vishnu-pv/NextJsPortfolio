@@ -264,17 +264,10 @@ function ProfileForm({ className }) {
             body: JSON.stringify({email, message})
         }) .then((res) => res.json())
             .then((data) => {
-                setLoading(false);
-                // if (data && data.id) {
-                //     alert(`Thank you for your interest ${name}! We will get back to you soon!`);
-                //     setName("");
-                //     setEmail("");
-                // } else {
-                //     alert("Apologies! Please try again.");
-                // }
+
             })
             .catch((err) => {
-                //setLoading(false);
+                console.log(err)
                 alert("Ooops! unfortunately some error has occurred.");
             });
     };
