@@ -31,11 +31,17 @@ import {
 } from "@/components/ui/drawer";
 import resend, {Resend} from "resend";
 import EmailTemplate from "@/components/EmailTemplate";
+import {
+    AlertDialog, AlertDialogAction, AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+    AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
 
 export default function Home() {
     const [open, setOpen] = useState(false);
     const isDesktop = useMediaQuery("(min-width: 768px)");
-
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const menuButtonRef = useRef(null);
 
     useEffect(() => {
@@ -85,6 +91,9 @@ export default function Home() {
     const rightBar = {
         hidden: { x: 22, opacity: 0.5 }, // Initial position above by 10
         reveal: { x: 0, opacity: 1, transition: { duration: 1.5, ease: "easeIn" } }, // Moves down by 10px
+    };
+    const handleDrawerClose = () => {
+        setIsDrawerOpen(false);
     };
 
     const button = {
@@ -206,7 +215,9 @@ export default function Home() {
                     {/*<Button className="cursor-pointer hover:bg-white hover:text-black border-2 px-6 py-1 text-white font-bold border-black rounded bg-gray-900 tracking-widest">Drop A Message</Button>*/}
                     {isDesktop ?
                         <Dialog>
-                            <DialogTrigger className="cursor-pointer hover:bg-white hover:text-black border-2 px-6 py-1 text-white font-bold border-black rounded bg-gray-900 -tracking-tight">Drop A Message</DialogTrigger>
+                            <DialogTrigger className="cursor-pointer hover:bg-white hover:text-black border-2 px-6 py-1 text-white
+                            font-bold border-black rounded bg-gray-900 -tracking-tight hover:scale-105 duration-150" initial="hidden"
+                                           >Drop a Message</DialogTrigger>
                             <DialogContent>
                                 <DialogHeader>
                                     <DialogTitle>Send Message</DialogTitle>
@@ -219,8 +230,9 @@ export default function Home() {
                         :
                         <Drawer open={open} onOpenChange={setOpen}>
                             <DrawerTrigger asChild>
-                                <DialogTrigger className="cursor-pointer hover:bg-white hover:text-black border-2 px-6 py-1 text-white font-bold border-black rounded bg-gray-900 -tracking-tight">
-                                    Drop A Message
+                                <DialogTrigger className="cursor-pointer hover:bg-white hover:text-black border-2 px-6 py-1 text-white font-bold
+                                border-black rounded bg-gray-900 -tracking-tight">
+                                    Drop a Message
                                 </DialogTrigger>
                             </DrawerTrigger>
                             <DrawerContent className="h-1/2">
@@ -252,45 +264,82 @@ export default function Home() {
     );
 }
 
-function ProfileForm({ className }) {
+function ProfileForm({ className, onSubmitSuccess }) {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
+    const [success, setSuccess] = useState(false);
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log('Name', name)
         console.log('Email',email)
         console.log('Message',message)
-        await fetch("/api/send", {
-            method: "POST",
-            body: JSON.stringify({email, message})
-        }) .then((res) => res.json())
-            .then((data) => {
-
+        try{
+            const response = await fetch("/api/send", {
+                method: "POST",
+                body: JSON.stringify({name, email, message})
             })
-            .catch((err) => {
-                console.log(err)
-                alert("Ooops! unfortunately some error has occurred.");
-            });
+            if(response.ok){
+                setSuccess(true);
+            }
+        }catch(err){
+            console.error(err)
+            alert("Error! Something went wrong!");
+        }
     };
+    useEffect(() => {
+        if (success) {
+            const timer = setTimeout(() => {
+                setSuccess(false);
+            }, 3000);
+            setName('')
+            setEmail('')
+            setMessage('')
+            return () => clearTimeout(timer);
+        }
+    }, [success]);
     return (
-        <form className={cn("grid items-start gap-4 mt-4", className)} onSubmit={handleSubmit}>
-            <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </div>
-            <div className="grid gap-2">
-                <Label htmlFor="username">Message</Label>
-                <Textarea
-                    id="message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                />
-            </div>
-            <Button type="submit">Send</Button>
-        </form>
+        <>{
+            success && (
+                <AlertDialog open={success}>
+                    <AlertDialogContent className="w-1/3">
+                        <AlertDialogHeader>
+                            <AlertDialogTitle className="text-center">Message Successfully Sent!</AlertDialogTitle>
+                        </AlertDialogHeader>
+                    </AlertDialogContent>
+                </AlertDialog>
+            )
+        }
+            <form className={cn("grid items-start gap-4 mt-4", className)} onSubmit={handleSubmit}>
+                <div className="grid gap-2">
+                    <Label htmlFor="name">Name</Label>
+                    <Input
+                        type="text"
+                        id="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </div>
+                <div className="grid gap-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                        type="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+                <div className="grid gap-2">
+                    <Label htmlFor="username">Message</Label>
+                    <Textarea
+                        id="message"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                    />
+                </div>
+                <Button type="submit">Send</Button>
+            </form>
+        </>
+
     );
 }

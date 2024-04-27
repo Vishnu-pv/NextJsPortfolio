@@ -4,5 +4,5 @@ Ojavascript:S1128",Remove this unused import of 'DrawerFooter'.(À­µ¢8¡Šç³ñ1
 Njavascript:S1128 "&Remove this unused import of 'resend'.(®€óëÿÿÿÿÿ8¡Šç³ñ1
 Njavascript:S1128 "&Remove this unused import of 'Resend'.(®€óëÿÿÿÿÿ8¡Šç³ñ1
 Ujavascript:S1128!"-Remove this unused import of 'EmailTemplate'.(Ñ­Í†ÿÿÿÿÿ8¡Šç³ñ1
-Gjavascript:S125Œ"Remove this commented out code.(—Ó€¬ÿÿÿÿÿ8ŠÀë³ñ1
-Bjavascript:S125•"Remove this commented out code.(Â¾ž†8Ý‚ì³ñ1
+ejavascript:S1481&"=Remove the declaration of the unused 'isDrawerOpen' variable.(ÚÉì†úÿÿÿÿ8À£ÃÚñ1
+bjavascript:S1854&":Remove this useless assignment to variable "isDrawerOpen".(ÚÉì†úÿÿÿÿ8Á£ÃÚñ1

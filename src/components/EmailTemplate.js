@@ -3,8 +3,8 @@ import React from "react";
 
 const EmailTemplate = ({ email, message }) => (
     <div>
-        <h3>From -  {email}!</h3>
-        <p>Message -  {message}!</p>
+        <h3>Email ID -  {email}!</h3>
+        <h4>Message -  {message}!</h4>
     </div>
 );
 
